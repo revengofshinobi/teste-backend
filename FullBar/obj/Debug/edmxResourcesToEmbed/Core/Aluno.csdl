@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_TESTEModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TB_Aluno">
+    <Key>
+      <PropertyRef Name="idAluno" />
+    </Key>
+    <Property Name="idAluno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RA" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="idPeriodo" Type="Int32" />
+    <Property Name="idCurso" Type="Int32" />
+    <NavigationProperty Name="TB_Periodo" Relationship="Self.FK__TB_Aluno__idPeri__19DFD96B" FromRole="TB_Aluno" ToRole="TB_Periodo" />
+  </EntityType>
+  <EntityType Name="TB_Curso">
+    <Key>
+      <PropertyRef Name="idCurso" />
+    </Key>
+    <Property Name="idCurso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Curso" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TB_Curso1" Relationship="Self.FK__TB_Curso__idCurs__1AD3FDA4" FromRole="TB_Curso" ToRole="TB_Curso1" />
+    <NavigationProperty Name="TB_Curso2" Relationship="Self.FK__TB_Curso__idCurs__1AD3FDA4" FromRole="TB_Curso1" ToRole="TB_Curso" />
+  </EntityType>
+  <EntityType Name="TB_Periodo">
+    <Key>
+      <PropertyRef Name="idPeriodo" />
+    </Key>
+    <Property Name="idPeriodo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Periodo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TB_Aluno" Relationship="Self.FK__TB_Aluno__idPeri__19DFD96B" FromRole="TB_Periodo" ToRole="TB_Aluno" />
+  </EntityType>
+  <Association Name="FK__TB_Aluno__idPeri__19DFD96B">
+    <End Role="TB_Periodo" Type="Self.TB_Periodo" Multiplicity="0..1" />
+    <End Role="TB_Aluno" Type="Self.TB_Aluno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_Periodo">
+        <PropertyRef Name="idPeriodo" />
+      </Principal>
+      <Dependent Role="TB_Aluno">
+        <PropertyRef Name="idPeriodo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_Curso__idCurs__1AD3FDA4">
+    <End Role="TB_Curso" Type="Self.TB_Curso" Multiplicity="1" />
+    <End Role="TB_Curso1" Type="Self.TB_Curso" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_Curso">
+        <PropertyRef Name="idCurso" />
+      </Principal>
+      <Dependent Role="TB_Curso1">
+        <PropertyRef Name="idCurso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_TESTEEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TB_Aluno" EntityType="Self.TB_Aluno" />
+    <EntitySet Name="TB_Curso" EntityType="Self.TB_Curso" />
+    <EntitySet Name="TB_Periodo" EntityType="Self.TB_Periodo" />
+    <AssociationSet Name="FK__TB_Aluno__idPeri__19DFD96B" Association="Self.FK__TB_Aluno__idPeri__19DFD96B">
+      <End Role="TB_Periodo" EntitySet="TB_Periodo" />
+      <End Role="TB_Aluno" EntitySet="TB_Aluno" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_Curso__idCurs__1AD3FDA4" Association="Self.FK__TB_Curso__idCurs__1AD3FDA4">
+      <End Role="TB_Curso" EntitySet="TB_Curso" />
+      <End Role="TB_Curso1" EntitySet="TB_Curso" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

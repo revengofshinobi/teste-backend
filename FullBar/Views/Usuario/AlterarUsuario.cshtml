@@ -1,0 +1,310 @@
+﻿@model FullBar.Core.UsuarioFiltros
+
+@{
+    ViewBag.Title = "Alterar Usuario";
+}
+
+<div class="block-header">
+    <h2><strong>ALTERAR USUARIO</strong></h2>
+</div>
+<!-- Input -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+
+
+            <div class="body">
+
+                @*<div class="row clearfix">
+                    <div class="col-sm-12">
+                    </div>
+                </div>*@
+                        
+                            
+                <div class="row clearfix">
+
+                    <div id="errodiv" style="display:none;" class="alert alert-danger"></div>
+                    <div id="sucessodiv" style="display:none;" class="alert alert-success"></div>
+
+                    <div class="col-sm-12" >
+                        @using (Html.BeginForm("AlterarUsuario", "Usuario", FormMethod.Get)) { 
+                            <div class="form-group">
+                                <div class="form-line">
+                                    Curso
+                               
+
+                                    @Html.DropDownListFor(model => model.tbcurso,
+                             ((IEnumerable<FullBar.Core.TB_Curso>) Model.tbcurso).Select(option => new SelectListItem
+                                {
+                                    Text = option.idCurso + " - " + option.Curso,
+                                    Value = option.idCurso.ToString(),
+                                    Selected = (Model != null) 
+                                }), "ESCOLHA UM CURSO", new { @class = "form-control" })
+                                   
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    Nome
+                                    @Html.TextBox("nomealuno", null, new { id = "", @class = "form-control" })
+                                   
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    RA
+                                    @Html.TextBox("raluno", null, new { id = "", @class = "form-control" })
+                                   
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <button type="submit" title="Buscar"  class="btn bg-purple waves-effect"  >Buscar</button>
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                    <br>
+                        <div class="body table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Id Aluno</th>
+                                    <th>Nome</th>
+                                    <th>RA</th>
+                                    <th>Periodo</th>
+                                    <th>Curso</th>
+                                    <th>Excluir</th>
+                                    <th>Editar</th>
+                                </tr>
+                                
+                                @foreach (var item in Model.tbaluno)
+                                {
+                                    <tr>
+                                        <td>@item.idAluno</td>
+                                        <td>@item.Nome</td>
+                                        <td>@item.RA</td>
+                                        <td>@item.idPeriodo</td>
+                                        <td>@item.idCurso</td>
+                                        <td><button type="button" title="Excluir" onclick="Excluir(this)" class="btn bg-red waves-effect" >Excluir</button> </td>
+                                        <td><button type="button" title="Editar" onclick="Editar(this)" class="btn bg-green waves-effect" >Editar</button> </td>
+                                    </tr>
+                                }
+                               
+
+                            </table>
+                        </div>
+
+
+
+
+
+
+                        <div id="divdetalhesaluno" style="display:none;">
+                            <div class="col-sm-12">
+                                <input id="txtidaluno" type="hidden" class="form-control"  />
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        Nome
+                                        <input id="txtnome" type="text" class="form-control" placeholder="Nome" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        RA
+                                        <input id="txtra" type="text" class="form-control" placeholder="RA" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        Período
+                                        <select id="ddlperiodo">
+                                            <option value="0" id="0">SELECIONE PERÍODO</option>
+                                            @{
+                                                foreach (var item in Model.tbperiodo)
+                                                {
+                                                    <option value="@item.idPeriodo" id="@item.idPeriodo">@item.Periodo</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        Curso
+                                        <select id="ddlcurso">
+                                            <option value="0" id="0">SELECIONE UM CURSO</option>
+                                            @{
+                                                foreach (var item in Model.tbcurso)
+                                                {
+                                                    <option value="@item.idCurso" id="@item.idCurso">@item.Curso</option>
+                                                }
+                                            }
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <button type="button" title="Salvar" onclick="AtualizarAluno()" class="btn bg-green waves-effect">Salvar</button>
+                                        <button type="button" title="Cancelar" onclick="Cancelar()" class="btn bg-red waves-effect" >Cancelar</button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+            
+             </div>
+            </div>
+        </div>
+   </div>
+
+<script>
+        function MostrarDiv() {
+            $('#divdetalhesaluno').show();
+        }
+        function OcultarDiv() {
+            $('#divdetalhesaluno').hide();
+        }
+
+        function MsgErro(msg){
+            $('#errodiv').show();
+            $('#sucessodiv').hide();
+            $('#errodiv').html(msg);
+            $('#sucessodiv').html('');
+        }
+        function MsgSucesso(msg){
+            $('#errodiv').hide();
+            $('#sucessodiv').show();
+            $('#errodiv').html('');
+            $('#sucessodiv').html(msg);
+        }
+
+        
+
+        function Excluir(item) {
+            debugger;
+            var tr = $(item).closest('tr');
+            
+            
+
+            $.ajax({
+                url: '/Usuario/DeletarAluno/',
+                data: {
+                    idaluno: tr.children("td:nth-child(1)").text()
+                },
+                type: 'post',
+                datatype: 'json',
+                error: function () {
+
+                },
+                success: function (data, textStatus, XMLHttpRequest) {
+                    if (data.IsSucesso) {
+                        tr.remove();
+                        MsgSucesso(data.Message);
+                        Cancelar();
+
+                    } else if (data.IsErro) {
+                        MsgErro(data.Message);
+                        Cancelar();
+
+                    }
+                }
+            });
+
+            //MsgSucesso("Excluido o aluno com id " + tr.children("td:nth-child(1)").text());
+            
+        };
+
+        function Editar(item) {
+            debugger;
+            var tr = $(item).closest('tr');
+         
+            var IdAluno = tr.children("td:nth-child(1)").text();
+            var nomecoluna = tr.children("td:nth-child(2)").text();
+            var racoluna = tr.children("td:nth-child(3)").text();
+            var periodocoluna = tr.children("td:nth-child(4)").text();
+            var cursocoluna = tr.children("td:nth-child(5)").text();
+
+            $('#txtidaluno').val(IdAluno);
+            $('#txtnome').val(nomecoluna);
+            $('#txtra').val(racoluna);
+            $("#ddlperiodo").val(periodocoluna).change();
+            $("#ddlcurso").val(cursocoluna).change();
+            //$("#ddlperiodo").val( $('option:contains("Bezerro")').val()).change();
+            MostrarDiv();
+
+           
+ 
+            
+        };
+
+        function LimparCampos() {
+            $('#txtidaluno').val('');
+            $('#txtnome').val('');
+            $('#txtra').val('');
+            $("#ddlperiodo").val(0).change();
+            $("#ddlcurso").val(0).change();
+        }
+
+        function Cancelar() {
+            OcultarDiv();
+            LimparCampos();
+        }
+
+        function AtualizarAluno() {
+
+            $.ajax({
+                url: '/Usuario/AtualizarAluno/',
+                data: {
+                    idaluno: $("#txtidaluno").val(),
+                    nomealuno: $("#txtnome").val(),
+                    raluno: $("#txtra").val(),
+                    idcurso: $("#ddlcurso").val(),
+                    idperiodo: $("#ddlperiodo").val(),
+
+                },
+                type: 'post',
+                datatype: 'json',
+                error: function () {
+
+                },
+                success: function (data, textStatus, XMLHttpRequest) {
+                    if (data.IsSucesso) {
+                       
+                        MsgSucesso(data.Message);
+                        Cancelar();
+
+                    } else if (data.IsErro) {
+                        MsgErro(data.Message);
+                        Cancelar();
+
+                    }
+                }
+            });
+
+
+            
+        }
+
+
+        
+
+        
+       
+       
+
+
+</script>
+

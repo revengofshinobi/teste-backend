@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DB_TESTEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TB_Aluno">
+    <Key>
+      <PropertyRef Name="idAluno" />
+    </Key>
+    <Property Name="idAluno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="100" />
+    <Property Name="RA" Type="varchar" MaxLength="10" />
+    <Property Name="idPeriodo" Type="int" />
+    <Property Name="idCurso" Type="int" />
+  </EntityType>
+  <EntityType Name="TB_Curso">
+    <Key>
+      <PropertyRef Name="idCurso" />
+    </Key>
+    <Property Name="idCurso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Curso" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="TB_Periodo">
+    <Key>
+      <PropertyRef Name="idPeriodo" />
+    </Key>
+    <Property Name="idPeriodo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Periodo" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <Association Name="FK__TB_Aluno__idPeri__19DFD96B">
+    <End Role="TB_Periodo" Type="Self.TB_Periodo" Multiplicity="0..1" />
+    <End Role="TB_Aluno" Type="Self.TB_Aluno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_Periodo">
+        <PropertyRef Name="idPeriodo" />
+      </Principal>
+      <Dependent Role="TB_Aluno">
+        <PropertyRef Name="idPeriodo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TB_Curso__idCurs__1AD3FDA4">
+    <End Role="TB_Curso" Type="Self.TB_Curso" Multiplicity="1" />
+    <End Role="TB_Curso1" Type="Self.TB_Curso" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_Curso">
+        <PropertyRef Name="idCurso" />
+      </Principal>
+      <Dependent Role="TB_Curso1">
+        <PropertyRef Name="idCurso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB_TESTEModelStoreContainer">
+    <EntitySet Name="TB_Aluno" EntityType="Self.TB_Aluno" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_Curso" EntityType="Self.TB_Curso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_Periodo" EntityType="Self.TB_Periodo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__TB_Aluno__idPeri__19DFD96B" Association="Self.FK__TB_Aluno__idPeri__19DFD96B">
+      <End Role="TB_Periodo" EntitySet="TB_Periodo" />
+      <End Role="TB_Aluno" EntitySet="TB_Aluno" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_Curso__idCurs__1AD3FDA4" Association="Self.FK__TB_Curso__idCurs__1AD3FDA4">
+      <End Role="TB_Curso" EntitySet="TB_Curso" />
+      <End Role="TB_Curso1" EntitySet="TB_Curso" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

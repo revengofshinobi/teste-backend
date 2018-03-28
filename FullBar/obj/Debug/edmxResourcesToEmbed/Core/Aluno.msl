@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DB_TESTEModelStoreContainer" CdmEntityContainer="DB_TESTEEntities">
+    <EntitySetMapping Name="TB_Aluno">
+      <EntityTypeMapping TypeName="DB_TESTEModel.TB_Aluno">
+        <MappingFragment StoreEntitySet="TB_Aluno">
+          <ScalarProperty Name="idAluno" ColumnName="idAluno" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="RA" ColumnName="RA" />
+          <ScalarProperty Name="idPeriodo" ColumnName="idPeriodo" />
+          <ScalarProperty Name="idCurso" ColumnName="idCurso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Curso">
+      <EntityTypeMapping TypeName="DB_TESTEModel.TB_Curso">
+        <MappingFragment StoreEntitySet="TB_Curso">
+          <ScalarProperty Name="idCurso" ColumnName="idCurso" />
+          <ScalarProperty Name="Curso" ColumnName="Curso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_Periodo">
+      <EntityTypeMapping TypeName="DB_TESTEModel.TB_Periodo">
+        <MappingFragment StoreEntitySet="TB_Periodo">
+          <ScalarProperty Name="idPeriodo" ColumnName="idPeriodo" />
+          <ScalarProperty Name="Periodo" ColumnName="Periodo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
